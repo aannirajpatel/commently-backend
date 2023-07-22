@@ -1,8 +1,10 @@
 {
   "name": "functions",
   "description": "Cloud Functions for Firebase",
+  "license": "UNLICENSED",
   "scripts": {
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "serve": "firebase emulators:start --only functions",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
@@ -10,12 +12,12 @@
     "logs": "firebase functions:log"
   },
   "engines": {
-    "node": "18"
+    "node": "16"
   },
   "main": "index.js",
   "dependencies": {
-    "firebase-admin": "^11.8.0",
-    "firebase-functions": "^4.3.1",
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.18.0",
     "get-urls": "^10.0.0",
     "is-base64": "^1.1.0",
     "metascraper": "^5.26.0",
@@ -34,9 +36,9 @@
     "request": "^2.88.2"
   },
   "devDependencies": {
-    "eslint": "^8.15.0",
+    "eslint": "^8.9.0",
     "eslint-config-google": "^0.14.0",
-    "firebase-functions-test": "^3.1.0"
+    "firebase-functions-test": "^0.2.0"
   },
   "private": true
 }

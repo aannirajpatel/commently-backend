@@ -1,0 +1,45 @@
+{
+  "name": "link-preview-generator",
+  "version": "1.1.0",
+  "description": "Get preview data (a title, description, image, domain name, favicon) from a url. Library uses puppeteer headless browser to scrape the web site.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=8.16.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndrejGajdos/link-preview-generator.git"
+  },
+  "keywords": [
+    "link",
+    "url",
+    "preview",
+    "open",
+    "graph",
+    "link",
+    "preview",
+    "url",
+    "preview",
+    "link-previewer",
+    "data",
+    "extraction"
+  ],
+  "author": "Andrej Gajdos <mail@andrejgajdos.com> (https://andrejgajdos.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AndrejGajdos/link-preview-generator/issues"
+  },
+  "homepage": "https://github.com/AndrejGajdos/link-preview-generator#readme",
+  "dependencies": {
+    "get-urls": "^10.0.0",
+    "is-base64": "^1.1.0",
+    "puppeteer": "^8.0.0",
+    "puppeteer-extra": "^3.1.18",
+    "puppeteer-extra-plugin-stealth": "^2.7.6",
+    "request": "^2.88.2"
+  },
+  "types": "./index.d.ts"
+}

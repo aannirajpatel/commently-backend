@@ -7,18 +7,29 @@ const db = admin.database();
 const setSiteInfoAndOrReturnSite = async (siteUrl, linkPreview) => {
   const siteUrlsRef = db.ref("siteUrls");
   const siteUrlHash = hashed(siteUrl);
-  // eslint-disable-next-line max-len
   console.log("Received linkPreview obj in setSiteInfoAndOrReturnSite: " + JSON.stringify(linkPreview));
-  // eslint-disable-next-line max-len
-  const site = {...linkPreview, firestoreSiteId: hashed(linkPreview.canonicalUrl)};
-  try {
+  const site = {
+    ...linkPreview,
+    firestoreSiteId: hashed(linkPreview.canonicalUrl),
+  };
+
+  if (siteUrl.canonicalUrl) {
+    const canonicalSiteUrlHash = hashed(siteUrl);
     await siteUrlsRef.update({
-      [siteUrlHash]: site,
+      [siteUrlHash]: {
+        ref: canonicalSiteUrlHash,
+      },
     });
-    console.error("Saved siteInfo for siteUrl: " + siteUrl);
-  } catch (error) {
-    console.error("Cannot save site mapping for siteUrl:`" + siteUrl + "`");
-    console.error(error);
+  } else {
+    try {
+      await siteUrlsRef.update({
+        [siteUrlHash]: site,
+      });
+      console.error("Saved siteInfo for siteUrl: " + siteUrl);
+    } catch (error) {
+      console.error("Cannot save site mapping for siteUrl:`" + siteUrl + "`");
+      console.error(error);
+    }
   }
   return site;
 };
