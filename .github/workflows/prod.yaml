@@ -21,7 +21,8 @@ jobs:
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
-      - name: Install required packages for source code
+      - name: Install required packages for functions
+        working-directory: ./functions
         run: npm install
 
       - name: Authenticate with Firebase
