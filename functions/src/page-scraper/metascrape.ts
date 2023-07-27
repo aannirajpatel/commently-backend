@@ -39,8 +39,7 @@ export async function tryMetascraper(siteUrl: string): Promise<MetascraperData> 
   try {
     triedHtml = await gotScraping(siteUrl);
   } catch (error) {
-    console.log("Error resolving triedHtml");
-    throw error;
+    console.log("Error resolving site's HTML for metascraper");
   }
   return await metascraper({ url: siteUrl, html: triedHtml.body });
 }

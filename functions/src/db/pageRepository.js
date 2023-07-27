@@ -19,14 +19,18 @@ export const generatePageInfo = async (pageUrl) => {
 
   console.log("Scraped page information: " +JSON.stringify(scraped));
   
+  const pageId = hashed(scraped.canonicalUrl);
   const pageData = {
     ...scraped,
-    commentPageId: hashed(scraped.canonicalUrl),
+    pageId,
   };
   
   try {
     await pageRef.update({
       [pageHash]: pageData,
+    });
+    await pageRef.update({
+      [pageId]: pageData,
     });
     console.log("Saved pageInfo for pageUrl: " + pageUrl);
   } catch (error) {

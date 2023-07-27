@@ -15,5 +15,17 @@ service cloud.firestore {
     match /pages/{pageId}/comments/{commentId} {
       allow write: if request.auth != null;
     }
+
+    // Allow public read access, but only allow write if the user is authenticated and the uid matches
+    match /users/{userId} {
+      allow read: if true; 
+      allow create: if request.auth.uid == userId;
+      allow update: if request.auth.uid == userId;
+    }
+
+    // Only allow access to the private info if the user is authenticated and the uid matches
+    match /users/{userId}/private/info {
+      allow read, write: if request.auth.uid == userId;
+    }
   }
 }

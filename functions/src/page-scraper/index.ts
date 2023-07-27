@@ -2,7 +2,6 @@ import puppeteer from "puppeteer-extra";
 import pluginStealth from "puppeteer-extra-plugin-stealth";
 import request from "request-promise-native";
 import { MetascraperData, tryMetascraper } from "./metascrape.js";
-import { HttpsError } from "firebase-functions/v2/https";
 import { getTitle } from "./getTitle.js";
 import { getImg } from "./getImg.js";
 import { getFavicon } from "./getFavicon.js";
@@ -30,7 +29,6 @@ export type PageInfo = {
  * @param {string} puppeteerAgent - (Optional) User agent string to be used by Puppeteer.
  * @param {string} executablePath - (Optional) Path to the Puppeteer executable.
  * @returns {Promise<Object>} A Promise that resolves to an object containing scraped page information.
- * @throws {HttpsError} Throws an HttpsError with "not-found" code if the canonical URL is not found.
  */
 export async function scrapePage(
   uri: string,
@@ -49,7 +47,7 @@ export async function scrapePage(
     params.executablePath = executablePath;
   }
 
-  const obj: Partial<PageInfo> = {};
+  const obj: PageInfo = {};
 
   try {
     const browser = await puppeteer.launch(params);
@@ -72,9 +70,7 @@ export async function scrapePage(
   } catch (e) {
     console.log("Error in Puppeteer scraper: ");
     console.log(JSON.stringify(e));
-    console.log("---end of error log ---");
-    throw e;
-  }
+    console.log("---end of error log ---");  }
 
   const metascraped = await tryMetascraper(uri);
   const mapMetascraper: Record<keyof Omit<PageInfo,'domain'>, keyof MetascraperData> = {
@@ -92,7 +88,12 @@ export async function scrapePage(
   }
   console.log("Metascraped:" + JSON.stringify(metascraped));
   if (!obj?.canonicalUrl) {
-    throw new HttpsError("not-found", "Site not found");
+    obj.canonicalUrl = uri;
+  }
+  for(const key of Object.keys(obj)){
+    if(!!!(obj?.[key as keyof PageInfo])){
+      obj[key as keyof PageInfo] = null;
+    }
   }
   return obj;
 }
