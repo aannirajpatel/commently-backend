@@ -82,8 +82,9 @@ export async function scrapePage(
     title: "title",
   };
   for (const [key, value] of Object.entries(mapMetascraper)) {
-    if (!obj[key as keyof Omit<PageInfo,'domain'>] && metascraped["author"]) {
+    if (!!!(obj?.[key as keyof Omit<PageInfo,'domain'>]) && metascraped["author"]) {
       obj[key as keyof Omit<PageInfo,'domain'>] = metascraped[value];
+      console.log(`Overwrote ${key} with a value of ${value} in place of ${obj[key as keyof Omit<PageInfo,'domain'>]}`);
     }
   }
   console.log("Metascraped:" + JSON.stringify(metascraped));
