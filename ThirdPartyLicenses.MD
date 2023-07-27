@@ -1,3 +1,7 @@
+Below is a reproduction of the license for the libraries that this code leverages and modifies:
+
+[`link-preview-generator`](https://github.com/AndrejGajdos/link-preview-generator)
+
 MIT License
 
 Copyright (c) 2019 Andrej Gajdos
